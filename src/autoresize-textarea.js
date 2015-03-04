@@ -9,18 +9,16 @@
   // See: https://github.com/umdjs/umd
   if (typeof define === 'function' && define.amd) {
     // Expose this plugin as an AMD module. Register an anonymous module.
-    define(['jquery'], function($) {
-      return factory($);
-    });
+    define(['jquery'], factory);
   } else if (typeof exports === 'object') {
-    // Node/CommonJS module.
+    // Node/CommonJS module
     module.exports = factory(require('jquery'));
   } else {
-    // Expose this plugin to global object.
-    global.autoResize = factory(global.jQuery);
+    // Browser globals
+    factory(global.jQuery, global);
   }
 
-}(this, function($) {
+}(this, function($, global) {
 
   'use strict';
 
@@ -117,6 +115,9 @@
         autoResize(elem);
       });
     };
+  } else if (global) {
+    // Expose it as a method on global object.
+    global.autoResize = autoResize;
   }
 
   return autoResize;
