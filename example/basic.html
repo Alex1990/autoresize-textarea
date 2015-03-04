@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic</title>
+    <style>
+        .fl {
+            float: left;
+        }
+        .fr {
+            float: right;
+        }
+        .clearfix:before,
+        .clearfix:after {
+            content: ' ';
+            display: table;
+        }
+        .clearfix:after {
+            clear: both;
+        }
+        .clearfix {
+            *zoom: 1;
+        }
+        .col {
+            margin-right: 30px;
+        }
+        .desc {
+            padding: 3px;
+            height: 20px;
+            font-size: 14px;
+            line-height: 20px;
+            overflow: hidden;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Try to input/delete some characters. </h1>
+    <ul>
+        <li><strong>Input interactions:</strong> Type, Paste (Ctrl+X or context menu), drag and drop, Undo (Ctrl+Z or context menu).</li>
+        <li><strong>Delete interactions:</strong> ESC key, Delete key, Cut (Ctrl+X or context menu), drag and drop, Undo (Ctrl+Z or context menu).</li>
+    </ul>
+    <div class="clearfix">
+        <div class="col fl">
+            <h2>Auto resize textarea</h2>
+            <textarea name="desc" id="desc" class="desc" cols="30" rows="1"></textarea>
+        </div>
+        <div class="col fl">
+            <h2>Default textarea</h2>
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="../src/autoresize-textarea.js"></script>
+    <script>
+        $(function(){
+            $('#desc').autoResize();
+        });
+    </script>
+</body>
+</html>
