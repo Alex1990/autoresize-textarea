@@ -69,9 +69,9 @@ You can pass an configurable object as the first parameter. If you passed a func
 
   In callback function, `this` refer to the textarea element and the first argument is the current height of the textarea.
 
-## Events
+## Events (Only for as a jQuery plugin)
 
-When the input event is fired, a named `autoresize:height` event will be triggered on textarea element and the current height of textarea will be passed as the second parameter of the event listener. This is valid as a jQuery plugin.
+When characters are inputted into the textarea, a named `autoresize:height` event will be triggered on textarea element and the current height of textarea will be passed as the second parameter of the event listener.
 
 ## Compatibility
 
@@ -83,7 +83,7 @@ In IE7 (including compatibility mode), the content will jump up and down when yo
 
 ## Thanks to
 
-- The [dottoro](help.dottoro.com) reference helps me get some key details about `scrollHeight` and `oninput`/`onpropertychange`/`onpaste` events.
+- The [dottoro](http://help.dottoro.com) reference helps me get some key details about `scrollHeight` and `oninput`/`onpropertychange`/`onpaste` events.
 
 - A Ben Alpert's article - [A near-perfect oninput shim for IE 8 and 9](http://benalpert.com/2013/06/18/a-near-perfect-oninput-shim-for-ie-8-and-9.html), makes me understand how to use the `onselectionchange` event.
 
