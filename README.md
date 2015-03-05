@@ -69,7 +69,9 @@ You can pass an configurable object as the first parameter. If you passed a func
 
   In callback function, `this` refer to the textarea element and the first argument is the current height of the textarea.
 
-## Events (Only for as a jQuery plugin)
+## Events
+
+**Only for as a jQuery plugin**
 
 When characters are inputted into the textarea, a named `autoresize:height` event will be triggered on textarea element and the current height of textarea will be passed as the second parameter of the event listener.
 
