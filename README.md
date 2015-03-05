@@ -53,14 +53,33 @@ npm install autoresize-textarea
 bower install autoresize-textarea
 ```
 
+## Options
+
+You can pass an configurable object as the first parameter. If you passed a function as the first parameter, it will be treated as `callback` option.
+
+- **maxHeight**
+
+  Type: `Number` Default: `undefined`
+
+  When the height of textarea is greater than `maxHeight`, the `maxHeight` will be as the height, and the `overflow-y` will be set to `auto`.
+
+- **callback**
+
+  Type: `Function` Default: `undefined`
+
+  In callback function, `this` refer to the textarea element and the first argument is the current height of the textarea.
+
+## Events
+
+When the input event is fired, a named `autoresize:height` event will be triggered on textarea element and the current height of textarea will be passed as the second parameter of the event listener. This is valid as a jQuery plugin.
+
 ## Compatibility
 
 Tested in IE6+ (including compatibility mode) and other modern browsers.
 
-**A few bugs:**
+**Bugs:**
 
-- In IE7 (including IE8/9 compatibility mode), it seems that the `onpropertychange` is not fired when the undo operation is executed (Ctrl+Z or Context menu).
-- In IE8 (including IE9 compatibility mode), when you recover some text by undo, and then delete the recovered text by pressing the "Delete" key, the `onpropertychange` won't fire.
+In IE7 (including compatibility mode), the content will jump up and down when you press enter key.
 
 ## Thanks to
 
