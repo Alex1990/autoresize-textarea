@@ -84,7 +84,27 @@
     var offset = elem.scrollHeight - (elem.clientHeight - vPadding);
     elem.value = lastValue;
 
+    var scrollListener;
+    var tmpValue;
+
+    if (ie < 9) {
+      // For IE6-8, prevent the content jump when press  enter key quickly.
+      scrollListener = function() {
+        elem.scrollTop = 0;
+      };
+      elem.attachEvent('onscroll', scrollListener);
+
+      // In IE6-8, the first interaction (type/paste/drop) maybe not trigger 
+      // the onpropertychange.
+      tmpValue = elem.value;
+      elem.value = 'aa';
+      elem.value = tmpValue;
+      doc.execCommand('Undo');
+      doc.execCommand('Undo');
+    }
+
     var isInit = true;
+    var isMaxHeight = false;
 
     // When the input event is fired and the content of textarea is changed,
     // remove the inline style height, and then set the inline style height
@@ -105,6 +125,9 @@
           if (opts.maxHeight && height > opts.maxHeight) {
             elem.style.height = opts.maxHeight + 'px';
             elem.style.overflowY = 'auto';
+            isMaxHeight = true;
+
+            elem.detachEvent && elem.detachEvent('onscroll', scrollListener);
           } else {
             elem.style.height = height + 'px';
           }
@@ -114,7 +137,6 @@
           if ($ && $.fn) {
             $(elem).trigger('autoresize:height', currentHeight);
           }
-
           opts.callback && opts.callback.call(elem, currentHeight);
         };
 
@@ -159,26 +181,6 @@
           inputListener();
         }
       });
-    }
-
-    // For IE6,8+, prevent the content jump when press  enter key quickly.
-    var scrollListener;
-    if (ie) {
-      scrollListener = function() {
-        elem.scrollTop = 0;
-      };
-      if (elem.attachEvent) {
-        elem.attachEvent('onscroll', scrollListener);
-      } else if (ie > 8) {
-        addEvent('scroll', scrollListener);
-      }
-    }
-
-    // In IE6-8, the first interaction (type/paste/drop) maybe not trigger 
-    // the onpropertychange.
-    if (ie < 9) {
-      elem.value = 'aa';
-      doc.execCommand('Undo');
     }
 
     // Initialize
