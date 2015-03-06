@@ -96,7 +96,7 @@ Tested in IE6+ (including compatibility mode) and other modern browsers.
 
 ## Todos
 
-- A method to reset the textarea to default.
+- Study how to fix the above bugs. Learn the `DOMAttrModified` event.
 
 ## Thanks to
 
