@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>autoresize-textarea - A jQuery (optional) plugin can automatically resize the textarea's height</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    body,
+    textarea {
+      font: 400 16px/1.8 Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    }
+    a {
+      color: #265C83;
+      transition: color .4s;
+    }
+    a:link,
+    a:visited {
+      color: #265C83;
+    }
+    a:hover {
+      color: #7FDBFF;
+    }
+    a:active {
+      color: #007BE6;
+      transition: color .3s;
+    }
+    p {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+    .wrapper {
+      width: 960px;
+      margin: 0 auto;
+    }
+    .mast-head {
+      background-color: #f4f4f4;
+      color: #555;
+      border-bottom: 1px dashed #e8e8e8;
+      overflow: hidden;
+    }
+    .mast-head .title {
+      margin: .5em 0 .125em;
+      font-size: 4em;
+      line-height: 1
+    }
+    .mast-head .description {
+      font-size: 1.5em;
+    }
+    .content {
+      margin-top: 1em;
+    }
+    .content h2 {
+      border-bottom: 2px solid #f4f4f4;
+    }
+    .content .intro {
+      font-size: 14px;
+      color: #555;
+    }
+    .content .desc {
+      padding: 5px;
+      width: 700px;
+      height: 24px;
+      font-size: 16px;
+      line-height: 24px;
+      overflow: hidden;
+      color: #444;
+      border: 1px solid #ccc;
+      outline: 0;
+      resize: none;
+    }
+    .content .desc:focus {
+      border-color: #aaa;
+    }
+    .footer {
+      padding: 50px 0 20px;
+      overflow: hidden;
+    }
+    .footer .copyright {
+      font-size: 14px;
+      text-align: center;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="mast-head">
+    <div class="wrapper">
+      <h1 class="title">autoresize-textarea</h1>
+      <p class="description">A jQuery (optional) plugin can automatically resize the textarea's height.</p>
+    </div>
+  </div>
+  <div class="content">
+    <div class="wrapper">
+      <div class="demo clearfix">
+        <h2 id="demo">Demo</h2>
+        <h3>Try to input or delete some characters. </h3>
+        <ul class="intro">
+          <li><strong>Input interactions:</strong> Type, Paste (Ctrl+X or Context Menu), Drag and Drop, Undo (Ctrl+Z or Context Menu).</li>
+          <li><strong>Delete interactions:</strong> Backspace key, Delete key, Cut (Ctrl+X or Context Menu), Drag and Drop, Undo (Ctrl+Z or Context menu).</li>
+        </ul>
+        <div class="desc-wrap">
+          <textarea name="desc" id="desc" class="desc" rows="1"></textarea>
+        </div>
+      </div>
+      <div class="example">
+        <h2 id="examples">Examples</h2>
+        <ul>
+          <li><a href="example/basic.html">Basic</a></li>
+          <li><a href="example/options.html">Options</a></li>
+          <li><a href="example/as-a-native-plugin.html">As a native plugin</a></li>
+          <li><a href="example/as-an-amd-module.html">As an AMD module</a></li>
+        </ul>
+      </div>
+      <div class="usage">
+        <h2 id="usage">Usage</h2>
+        <p>Download and learn how to use see <a href="https://github.com/Alex1990/autoresize-textarea">it on github</a></p>
+      </div>
+      <div class="license">
+        <h2 id="license">License</h2>
+        <p>Under the <a href="https://github.com/Alex1990/autoresize-textarea/blob/master/LICENSE">MIT license.</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="wrapper">
+      <p class="copyright">Copyright &copy;2015 Alex Chao</p>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="src/autoresize-textarea.js"></script>
+  <script>
+    $(function(){
+      $('#desc').autoResize();
+    });
+  </script>
+</body>
+</html>

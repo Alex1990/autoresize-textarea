@@ -23,6 +23,8 @@ CSS:
 }
 ```
 
+**Note:** Do not set transition property for the textarea.
+
 In most cases, it will be as a jQuery plugin.
 
 ```js
