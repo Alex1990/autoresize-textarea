@@ -66,7 +66,7 @@
       opts = {};
     } else if (typeof opts === 'function') {
       opts = {
-        callback: opts
+        onresizeheight: opts
       };
     }
 
@@ -104,7 +104,7 @@
     }
 
     var isInit = true;
-    var isMaxHeight = false;
+    var lastHeight;
 
     // When the input event is fired and the content of textarea is changed,
     // remove the inline style height, and then set the inline style height
@@ -113,7 +113,7 @@
       if (elem.value !== lastValue || isInit) {
         lastValue = elem.value;
 
-        var lastHeight = elem.style.height;
+        var tmpHeight = elem.style.height;
         elem.style.height = '';
 
         var setHeight = function() {
@@ -125,7 +125,6 @@
           if (opts.maxHeight && height > opts.maxHeight) {
             elem.style.height = opts.maxHeight + 'px';
             elem.style.overflowY = 'auto';
-            isMaxHeight = true;
 
             elem.detachEvent && elem.detachEvent('onscroll', scrollListener);
           } else {
@@ -134,10 +133,13 @@
 
           var currentHeight = parseFloat(elem.style.height);
 
-          if ($ && $.fn) {
-            $(elem).trigger('autoresize:height', currentHeight);
+          if (lastHeight !== currentHeight) {
+            lastHeight = currentHeight;
+            if ($ && $.fn) {
+              $(elem).trigger('autoresize:height', currentHeight);
+            }
+            opts.onresizeheight && opts.onresizeheight.call(elem, currentHeight);
           }
-          opts.callback && opts.callback.call(elem, currentHeight);
         };
 
         // In IE6-8, the immediate scrollHeight isn't expected after 
@@ -145,7 +147,7 @@
         if (ie < 9) {
           setTimeout(setHeight, 0);
           // Prevent the height jump.
-          elem.style.height = lastHeight;
+          elem.style.height = tmpHeight;
         } else {
           setHeight();
         }
