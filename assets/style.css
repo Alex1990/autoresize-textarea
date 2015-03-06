@@ -16,6 +16,26 @@ textarea {
   font:400 1em/1.8 Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
 }
 
+.btn {
+  display: inline-block;
+  *display: inline;
+  padding: 5px 10px;
+  font:400 1.125em/1 Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+  background: #eee;
+  color: #333;
+  border: 1px solid #ddd;
+  outline: 0;
+  box-shadow: 0 1px 3px #ddd;
+  transition: .25s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #f8f8f8;
+  color: #000;
+  border-color: #d0d0d0;
+}
+
 .fl {
   float: left;
 }

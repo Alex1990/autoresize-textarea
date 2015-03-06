@@ -31,7 +31,14 @@ In most cases, it will be as a jQuery plugin.
 $('#description').autoResize();
 ```
 
-But, if there isn't the jQuery object on global object, it will expose an `autoResize()` method to global object.
+It returns an object which contains a `reset` method to detach the bound events on textarea. So, the textarea will be changed to a normal textarea.
+
+```js
+var autoresizeObj = $('#description').autoResize();
+autoresizeObj.reset();
+```
+
+If there isn't the jQuery object on global object, it will expose an `autoResize()` method to global object.
 
 ```js
 autoResize( document.getElementById('description') );

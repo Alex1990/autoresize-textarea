@@ -42,9 +42,12 @@
   // selectionchange appears to fire in all of the remaining cases.
   var isSelectionchangeSupport = 'onselectionchange' in doc;
 
-  // An addEventListener wrapper to save bytes.
+  // An addEventListener/removeEventListener wrapper to save bytes.
   var addEvent = function(elem, event, listener) {
     elem.addEventListener(event, listener, false);
+  };
+  var removeEvent = function(elem, event, listener) {
+    elem.removeEventListener(event, listener, false);
   };
 
   // Get the computed style.
@@ -160,7 +163,7 @@
       if (e.type === 'focus') {
         addEvent(doc, 'selectionchange', inputListener);
       } else {
-        doc.removeEventListener('selectionchange', inputListener, false);
+        removeEvent(doc, 'selectionchange', inputListener);
       }
     };
 
@@ -172,30 +175,58 @@
         addEvent(elem, 'focus', focusListener);
         addEvent(elem, 'blur', focusListener);
       }
-    } else if (elem.attachEvent) {
+    } else {
 
       // For IE6-8, we can use onpropertychange (combine with propertyName) 
       // to simulate the input event, but they are not identical. For more
       // details about how to simulate the input event perfectly, you can
       // see http://benalpert.com/2013/06/18/a-near-perfect-oninput-shim-for-ie-8-and-9.html
-      elem.attachEvent('onpropertychange', function() {
+      var propertychangeListener = function() {
         if (window.event.propertyName === 'value') {
           inputListener();
         }
-      });
+      };
+      elem.attachEvent('onpropertychange', propertychangeListener);
     }
 
     // Initialize
     inputListener();
     isInit = false;
+
+    // Return an object which contains a `reset` method to detach the bound 
+    // events on textarea.
+    return {
+      reset: function() {
+        elem.style.height = '';
+        if (elem.addEventListener) {
+          removeEvent(elem, 'input', inputListener);
+          removeEvent(elem, 'focus', focusListener);
+          removeEvent(elem, 'blur', focusListener);
+        } else {
+          elem.style.overflowY = '';
+          elem.detachEvent('onpropertychange', propertychangeListener);
+          elem.detachEvent('onscroll', scrollListener);
+        }
+      }
+    };
   };
 
   // Expose it as a jQuery plugin.
   if ($ && $.fn) {
     $.fn.autoResize = function(opts) {
+      var arr = [];
+
       this.each(function(i, elem) {
-        autoResize(elem, opts);
+        arr.push(autoResize(elem, opts));
       });
+
+      return {
+        reset: function() {
+          $.each(arr, function(i, item) {
+            item.reset();
+          });
+        }
+      };
     };
   } else if (global) {
     // Expose it as a method on global object.
