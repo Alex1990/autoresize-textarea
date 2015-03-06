@@ -1,0 +1,72 @@
+::selection {
+  background-color: #f0f4f8;
+}
+
+::-moz-selection {
+  background-color: #f0f4f8;
+}
+
+body {
+  margin: 0;
+  padding: 10px;
+}
+
+body,
+textarea {
+  font:400 1em/1.8 Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: ' ';
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+.title {
+  color: #630;
+}
+
+.intro {
+  color: #444;
+}
+
+.test-section h2 {
+  color: #ddd;
+}
+
+.col {
+  margin-right: 30px;
+}
+
+.desc {
+  margin: 0;
+  padding: 5px;
+  width: 300px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  border: 1px solid #aaa;
+  outline: 0;
+  overflow: hidden;
+  resize: none;
+}
+
+.desc:focus {
+  border-color: #555;
+}
