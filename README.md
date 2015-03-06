@@ -89,9 +89,7 @@ Tested in IE6+ (including compatibility mode) and other modern browsers.
 
 ## Todos
 
-- An online demo page.
 - A method to reset the textarea to default.
-- In IE, ESC key will clear the content of textarea.
 
 ## Thanks to
 
