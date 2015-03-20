@@ -96,7 +96,7 @@ Tested in IE6+ (including compatibility mode) and other modern browsers.
 
 ## Todos
 
-- Study how to fix the above bugs. Learn the `DOMAttrModified` event.
+- Study how to fix the above bugs. Learn the `textInput` event.
 
 ## Thanks to
 
