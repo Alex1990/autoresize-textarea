@@ -94,10 +94,6 @@ Tested in IE6+ (including compatibility mode) and other modern browsers.
 - In IE7/8 (simulated by IE11), the `scrollHeight` will increase a few pixels after typing a character in a blank line (without any character).
 - In IE9 and IE7/8 (simulated by IE9), for `example/basic.html` example, when the value of `padding` is less than 5 pixels, the textarea will move up about 1 pixel after first newline.
 
-## Todos
-
-- Study how to fix the above bugs. Learn the `textInput` event.
-
 ## Thanks to
 
 - The [dottoro](http://help.dottoro.com) reference helps me get some key details about `scrollHeight` and `oninput`/`onpropertychange`/`onpaste` events.
