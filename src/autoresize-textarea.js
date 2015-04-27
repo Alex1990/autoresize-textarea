@@ -171,7 +171,9 @@
     // selectionchange event is needed.
     if (elem.addEventListener) {
       addEvent(elem, 'input', inputListener);
-      if (isSelectionchangeSupport) {
+
+      // Note that Chrome 41 (at least) also supports selectionchange event.
+      if (ie && isSelectionchangeSupport) {
         addEvent(elem, 'focus', focusListener);
         addEvent(elem, 'blur', focusListener);
       }
