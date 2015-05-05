@@ -1,7 +1,7 @@
 requirejs.config({
   'baseUrl': 'amd-js',
   'paths': {
-    'jquery': 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min',
+    'jquery': 'http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.2.min',
     'autoresize-textarea': '../../src/autoresize-textarea'
   }
 });
