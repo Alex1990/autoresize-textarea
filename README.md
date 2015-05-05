@@ -100,7 +100,7 @@ Tested in IE6+ (including compatibility mode) and other modern browsers.
 
 - A Ben Alpert's article - [A near-perfect oninput shim for IE 8 and 9](http://benalpert.com/2013/06/18/a-near-perfect-oninput-shim-for-ie-8-and-9.html), makes me understand how to use the `onselectionchange` event.
 
-- The [AutoResize](https://github.com/azoff/AutoResize) plugin commited in 2011 provides another solution. I refer to the part.
+- The [AutoResize](https://github.com/azoff/AutoResize) plugin commited in 2011 provides another solution. I refer to the part of it.
 
 ## License
 
