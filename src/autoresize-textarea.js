@@ -37,17 +37,15 @@
     ie = (match && match.length > 1 && match[1]) || '';
   }
 
-  // In IE 9, input event fires for most input operation but is buggy
-  // and doesn't fire when text is deleted, but conveniently,
-  // selectionchange appears to fire in all of the remaining cases.
-  var isSelectionchangeSupport = 'onselectionchange' in doc;
-
-  // An addEventListener/removeEventListener wrapper to save bytes.
+  // An attachEvent/detachEvent wrapper to save bytes.
   var addEvent = function(elem, event, listener) {
-    elem.addEventListener(event, listener, false);
+    elem[event + listener] = function(e) {
+      listener.call(elem, e);
+    };
+    elem.attachEvent('on' + event, elem[event + listener]);
   };
   var removeEvent = function(elem, event, listener) {
-    elem.removeEventListener(event, listener, false);
+    elem.detachEvent('on' + event, elem[event + listener]);
   };
 
   // Get the computed style.
@@ -95,13 +93,19 @@
       scrollListener = function() {
         elem.scrollTop = 0;
       };
-      elem.attachEvent('onscroll', scrollListener);
+      addEvent(elem, 'scroll', scrollListener);
 
-      // In IE6-8, the first interaction (type/paste/drop) maybe not trigger 
-      // the onpropertychange.
+      // In IE6-8, the first Drop interaction may not trigger keyup/keydown/
+      // propertychange/selectionchange event. The below code works for all
+      // examples except example/as-a-native-plugin.html(IE8). In fact, I don't know why
+      // it works.
       tmpValue = elem.value;
       elem.value = 'aa';
       elem.value = tmpValue;
+
+      // Restore the Undo command in context menu.
+      doc.execCommand('Undo');
+      doc.execCommand('Undo');
       doc.execCommand('Undo');
       doc.execCommand('Undo');
     }
@@ -129,7 +133,7 @@
             elem.style.height = opts.maxHeight + 'px';
             elem.style.overflowY = 'auto';
 
-            elem.detachEvent && elem.detachEvent('onscroll', scrollListener);
+            elem.detachEvent && removeEvent(elem, 'scroll', scrollListener);
           } else {
             elem.style.height = height + 'px';
           }
@@ -157,38 +161,41 @@
       }
     };
 
-    // The selectionchange is fired frequently, so we just listen it when
-    // the textarea gets cursor.
-    var focusListener = function(e) {
-      if (e.type === 'focus') {
-        addEvent(doc, 'selectionchange', inputListener);
-      } else {
-        removeEvent(doc, 'selectionchange', inputListener);
-      }
-    };
-
-    // For modern browsers, the input is enough. But for IE 9, the
-    // selectionchange event is needed.
-    if (elem.addEventListener) {
-      addEvent(elem, 'input', inputListener);
-
-      // Note that Chrome 41 (at least) also supports selectionchange event.
-      if (ie && isSelectionchangeSupport) {
-        addEvent(elem, 'focus', focusListener);
-        addEvent(elem, 'blur', focusListener);
-      }
+    // For modern browsers, the input is enough.
+    if (elem.addEventListener && (!ie || ie > 9)) {
+      elem.addEventListener('input', inputListener, false);
     } else {
 
-      // For IE6-8, we can use onpropertychange (combine with propertyName) 
+      // For IE6-9, we can use onpropertychange (combine with propertyName) 
       // to simulate the input event, but they are not identical. For more
       // details about how to simulate the input event perfectly, you can
       // see http://benalpert.com/2013/06/18/a-near-perfect-oninput-shim-for-ie-8-and-9.html
-      var propertychangeListener = function() {
-        if (window.event.propertyName === 'value') {
+      var propertychangeListener = function(e) {
+        if (e.propertyName === 'value') {
           inputListener();
         }
       };
-      elem.attachEvent('onpropertychange', propertychangeListener);
+      addEvent(elem, 'propertychange', propertychangeListener);
+
+      // In IE 9, input/propertychange event fires for most input operation but is buggy
+      // and doesn't fire when text is deleted, but conveniently,
+      // selectionchange appears to fire in all of the remaining cases.
+      //
+      // The selectionchange is fired frequently, so we just listen it when
+      // the textarea gets cursor.
+      var focusListener = function(e) {
+        if (e.type === 'focus') {
+          addEvent(doc, 'selectionchange', inputListener);
+        } else {
+          removeEvent(doc, 'selectionchange', inputListener);
+        }
+      };
+      addEvent(elem, 'focus', focusListener);
+      addEvent(elem, 'blur', focusListener);
+
+      // In IE6-8, the first interaction (type/paste) maybe not trigger
+      // the propertychange, but trigger keyup.
+      addEvent(elem, 'keyup', inputListener);
     }
 
     // Initialize
@@ -200,14 +207,16 @@
     return {
       reset: function() {
         elem.style.height = '';
-        if (elem.addEventListener) {
-          removeEvent(elem, 'input', inputListener);
-          removeEvent(elem, 'focus', focusListener);
-          removeEvent(elem, 'blur', focusListener);
+        if (elem.removeEventListener && (!ie || ie > 9)) {
+          elem.removeEventListener('input', inputListener, false);
         } else {
           elem.style.overflowY = '';
-          elem.detachEvent('onpropertychange', propertychangeListener);
-          elem.detachEvent('onscroll', scrollListener);
+          removeEvent(elem, 'propertychange', propertychangeListener);
+          removeEvent(doc, 'selectionchange', inputListener);
+          removeEvent(elem, 'focus', focusListener);
+          removeEvent(elem, 'blur', focusListener);
+          removeEvent(elem, 'keyup', inputListener);
+          removeEvent(elem, 'scroll', scrollListener);
         }
       }
     };
