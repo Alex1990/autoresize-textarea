@@ -1,7 +1,7 @@
 {
   "name": "autoresize-textarea",
+  "version": "1.1.3",
   "description": "A [jQuery] plugin can automatically resize textarea's height",
-  "version": "1.1.2",
   "main": "src/autoresize-textarea.js",
   "keywords": [
     "auto resize",
