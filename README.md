@@ -2,6 +2,8 @@
 
 A jQuery (optional) plugin can automatically resize the textarea's height.
 
+**Note: You can use Lea Verou's [stretchy](https://github.com/LeaVerou/stretchy) if you don't intend to support IE6-8.**
+
 ## Usage
 
 HTML:
